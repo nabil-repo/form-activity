@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 5%;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 40%;
+            box-sizing: border-box;
+        }
+
+        form h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #9a9bfd;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form onsubmit="validateForm(); return false;" id="myform">
+            <h1>Form</h1>
+
+            <label for="first-name">Name</label>
+            <input type="text" id="first-name"  required />
+            <div id="name-error" class="error"></div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+            <div id="email-error"class="error"></div>
+
+            <label for="phone">Phone no.</label>
+            <input type="text" id="phone"  required />
+            <div id="phone-error" class="error"></div>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" required />
+            <div id="age-error" class="error"></div>
+
+            
+            <button type="submit">Submit</button>
+        </form>
+        <h1 class="msg" id="msg" style="color: #45a049;visibility: hidden;">Form Submited Successfully</h1>
+    </div>
+
+    <script>
+        $("#myform").submit(function(e) {
+    e.preventDefault();
+});
+        function validateForm() {
+            let valid = true;
+
+            const name = document.getElementById('first-name');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const age = document.getElementById('age');
+
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const ageError = document.getElementById('age-error');
+            const msg = document.getElementById('msg');
+
+            // Reset error messages
+            nameError.textContent = '';
+            emailError.textContent = '';
+            phoneError.textContent = '';
+            ageError.textContent = '';
+
+            // Validate Name
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(name.value)) {
+                nameError.textContent = 'Name should contain only letters and spaces';
+                valid = false;
+            }
+
+            // Validate Email
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                emailError.textContent = 'Enter a valid email address';
+                valid = false;
+            }
+
+            // Validate Phone
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(phone.value)) {
+                phoneError.textContent = 'Phone number must be exactly 10 digits';
+                valid = false;
+            }
+
+            // Validate Age (no need for regex, using HTML5 input attributes)
+            if (age.value < 1 || age.value > 120) {
+                ageError.textContent = 'Age must be between 1 and 120';
+                valid = false;
+            }
+
+            if(valid){
+                msg.style.visibility = "visible";
+            }
+
+
+          //  return flase;
+        }
+    </script>
+</body>
+</html>
